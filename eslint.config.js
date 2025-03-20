@@ -33,6 +33,11 @@ export default [
     rules: {
       ...reactHooks.configs.recommended.rules,
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+
+      "arrow-body-style": ["error", "as-needed"],
+      'prefer-arrow-callback': ['error', { allowNamedFunctions: true }],
+      'no-async-promise-executor': 'error',
+      'prefer-const': 'error',
     },
   },
 ];
