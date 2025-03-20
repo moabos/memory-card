@@ -5,9 +5,9 @@ function App() {
   const [numberOfCards, setNumberOfCards] = useState(10);
 
   return (
-    <div className="relative w-1/2 rounded-2xl border-4 bg-gray-400 p-15 shadow-2xl shadow-black">
+    <main className="relative w-11/12 rounded-2xl border-4 bg-zinc-500 px-4 py-15 font-mono shadow-2xl shadow-black lg:w-1/2">
       <form className="flex flex-col gap-5">
-        <label className="flex flex-col items-center gap-3 text-4xl font-bold">
+        <label className="flex flex-col items-center gap-3 text-3xl font-bold">
           Number of cards
           <div className="flex w-5/6 flex-col items-center gap-2 rounded-2xl border-4 bg-stone-800 p-6">
             <input
@@ -24,11 +24,11 @@ function App() {
         </label>
 
         <label className="self-center text-center">
-          <span className="text-2xl font-bold">Card Content</span>
+          <span className="text-2xl font-semibold">Card Content</span>
           <Toggler
             labels={['Images', 'Letters']}
-            selectedClass="bg-gray-500"
-            className="rounded-full bg-zinc-800 text-slate-300"
+            selectedClass="bg-gray-500 shadow-lg shadow-black text-slate-200"
+            className="flex rounded-full border-2 border-black bg-zinc-800 text-slate-300"
             defaultSelected="Images"
             onChange={() => {}}
           />
@@ -36,15 +36,15 @@ function App() {
 
         <button
           type="submit"
-          className="absolute -bottom-[1rem] left-1/2 w-1/5 -translate-x-1/2 cursor-pointer rounded border-3 bg-zinc-400 py-2 text-xl font-bold transition-transform duration-300 ease-in-out hover:bg-zinc-500 active:translate-y-0.5 active:shadow active:shadow-black"
-          onClick={(e) => {
-            e.preventDefault();
+          className="absolute -bottom-[1.5rem] left-1/2 w-32 -translate-x-1/2 cursor-pointer rounded border-3 border-black bg-zinc-800 py-2 text-xl font-bold text-slate-300 transition-transform duration-300 ease-in-out hover:bg-gray-600 focus:bg-gray-600 active:translate-y-1 active:shadow active:shadow-black"
+          onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+            event.preventDefault();
           }}
         >
-          Fetch
+          Display
         </button>
       </form>
-    </div>
+    </main>
   );
 }
 

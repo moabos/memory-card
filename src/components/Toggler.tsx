@@ -12,7 +12,7 @@ interface TogglerProps {
 function Toggler({
   labels,
   className = 'w-fit bg-gray-200 p-1 rounded-full',
-  buttonClass = 'px-4 py-2 rounded-full m-0.5 transition hover:cursor-pointer',
+  buttonClass = 'px-4 py-2 rounded-full m-0.5 transition duration-500 hover:cursor-pointer',
   selectedClass = 'bg-gray-700',
   defaultSelected,
   onChange,
