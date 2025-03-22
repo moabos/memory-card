@@ -1,14 +1,14 @@
-import getRandomLetters from './getRandomLetters';
+import getRandomLetters, { LetterData } from './getRandomLetters';
 import shuffleArray from './shuffleArray';
 
-export interface ImageData {
+export interface PicsumData {
   id: string;
   author: string;
   url: string;
   download_url: string;
 }
 
-async function fetchImages(numberOfImages: number): Promise<string[] | ImageData[]> {
+async function fetchImages(numberOfImages: number): Promise<PicsumData[] | LetterData[]> {
   const maxPage = Math.floor(1000 / numberOfImages) - 1;
   const randomPage = Math.floor(Math.random() * maxPage);
 
@@ -21,10 +21,10 @@ async function fetchImages(numberOfImages: number): Promise<string[] | ImageData
       throw new Error('Fetching failed. Falling back on letters.');
     }
 
-    const data = (await response.json()) as ImageData[];
+    const data = (await response.json()) as PicsumData[];
 
-    const images: ImageData[] = data.map(
-      (img): ImageData => ({
+    const images = data.map(
+      (img): PicsumData => ({
         id: img.id,
         author: img.author,
         url: img.url,

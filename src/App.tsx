@@ -2,16 +2,17 @@ import { useState } from 'react';
 import CardForm from './components/CardForm';
 import Game from './components/Game';
 
-function App() {
-  const [submittedData, setSubmittedData] = useState<{
-    numberOfCards: number;
-    cardType: 'Images' | 'Letters';
-  } | null>(null);
+type FormData = {
+  numberOfCards: number;
+  cardType: 'Images' | 'Letters';
+};
 
-  const [lastFormData, setLastFormData] = useState<{
-    numberOfCards: number;
-    cardType: 'Images' | 'Letters';
-  }>({ numberOfCards: 10, cardType: 'Images' });
+function App() {
+  const [submittedData, setSubmittedData] = useState<FormData | null>(null);
+  const [lastFormData, setLastFormData] = useState<FormData>({
+    numberOfCards: 10,
+    cardType: 'Images',
+  });
 
   const [restartKey, setRestartKey] = useState(0);
 
@@ -26,6 +27,7 @@ function App() {
 
   function handleNewGame() {
     setSubmittedData(null);
+    setRestartKey(0);
   }
 
   return (
