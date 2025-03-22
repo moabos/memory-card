@@ -1,4 +1,5 @@
 import getRandomLetters from './getRandomLetters';
+import shuffleArray from './shuffleArray';
 
 export interface ImageData {
   id: string;
@@ -8,7 +9,8 @@ export interface ImageData {
 }
 
 async function fetchImages(numberOfImages: number): Promise<string[] | ImageData[]> {
-  const randomPage = Math.floor(Math.random() * 100);
+  const maxPage = Math.floor(1000 / numberOfImages) - 1;
+  const randomPage = Math.floor(Math.random() * maxPage);
 
   try {
     const response = await fetch(
@@ -29,7 +31,7 @@ async function fetchImages(numberOfImages: number): Promise<string[] | ImageData
         download_url: img.download_url,
       })
     );
-    return images;
+    return shuffleArray(images);
   } catch {
     return getRandomLetters(numberOfImages);
   }

@@ -2,24 +2,32 @@ import { ImageData } from 'src/utils/fetchImages';
 
 interface CardProps {
   content: string | ImageData;
+  hideAuthor?: boolean;
 }
 
-function Card({ content }: CardProps) {
+function Card({ content, hideAuthor }: CardProps) {
   return (
-    <div className="h-35 w-35 cursor-pointer content-center overflow-hidden rounded-xl bg-gray-300 text-center">
+    <div className="relative flex size-25 flex-col overflow-hidden rounded-xl border-2 text-center md:size-40">
       {typeof content === 'string' ? (
-        <span className="text-3xl font-bold">{content}</span>
+        <span className="m-auto text-3xl font-bold">{content}</span>
       ) : (
-        <>
-          <img
-            src={content.download_url}
-            height={150}
-            width={150}
-            alt="Random image"
-            data-id={content.id}
-          />
-          <span className="text-xs">{content.author}</span>
-        </>
+        <div className="flex h-full w-full flex-col">
+          <div className="h-full">
+            <img
+              src={content.download_url}
+              className="h-full w-full object-fill"
+              alt="Random image"
+              data-id={content.id}
+            />
+          </div>
+          {!hideAuthor && (
+            <span className="absolute bottom-0 left-0 w-full bg-white px-1 py-1 text-xs text-gray-600 opacity-50">
+              <a className="no-underline hover:underline" href={content.url}>
+                {content.author}
+              </a>
+            </span>
+          )}
+        </div>
       )}
     </div>
   );
