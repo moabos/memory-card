@@ -13,8 +13,7 @@ function Card({ id, content, handleSelect, hideAuthor }: CardProps) {
     <button
       className="relative flex size-25 flex-col overflow-hidden rounded-xl border-2 bg-white text-center hover:cursor-pointer md:size-40"
       type="button"
-      onClick={(event) => {
-        event.preventDefault();
+      onClick={() => {
         handleSelect(id);
       }}
     >

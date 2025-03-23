@@ -1,6 +1,6 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Card from './Card';
-import fetchImages from '../utils/fetchImages';
+import fetchImages, { preloadImages } from '../utils/fetchImages';
 import getRandomLetters from '../utils/getRandomLetters';
 import { CardContent } from '../types/CardContent';
 
@@ -22,8 +22,8 @@ function CardsContainer({
   onGameUpdate,
 }: CardsContainerProps) {
   const [cardContent, setCardContent] = useState<CardContent>([]);
-  const [shuffle, setShuffle] = useState(false);
   const [selectedCards, setSelectedCards] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const scrollYRef = useRef<number>(0);
 
@@ -43,32 +43,38 @@ function CardsContainer({
     }
 
     scrollYRef.current = window.scrollY;
-    setShuffle((prev) => !prev);
+    setCardContent((prev) => handleShuffle(prev));
   }
 
   useEffect(() => {
-    if (cardContent.length === 0) return;
-    const shuffled = handleShuffle(cardContent);
-    setCardContent(shuffled);
-  }, [shuffle]);
-
-  useEffect(() => {
     async function fetchData() {
+      setIsLoading(true);
+
       const data: CardContent =
         cardType === 'Images' ? await fetchImages(numberOfCards) : getRandomLetters(numberOfCards);
 
+      if ('download_url' in data[0]) {
+        const urls = data.map((img) => (img as { download_url: string }).download_url);
+        await preloadImages(urls);
+      }
+
       setCardContent(data);
+      setIsLoading(false);
     }
 
     void fetchData();
   }, [cardType, numberOfCards]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     window.scrollTo({
       top: scrollYRef.current,
       behavior: 'auto',
     });
   }, [cardContent]);
+
+  if (isLoading) {
+    return <div className="animate-pulse py-20 text-xl text-white">Loading cards...</div>;
+  }
 
   return (
     <div className="flex flex-wrap items-center justify-center gap-2">
